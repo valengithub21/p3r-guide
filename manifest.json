@@ -1,0 +1,23 @@
+{
+  "short_name": "P3R Guide",
+  "name": "Persona 3 Reload Guide",
+  "icons": [
+    {
+      "src": "./icon.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#050b14",
+  "theme_color": "#050b14",
+  "display": "standalone",
+  "orientation": "portrait"
+}

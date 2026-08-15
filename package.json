@@ -1,0 +1,15 @@
+{
+  "name": "p3r-guide",
+  "version": "1.0.0",
+  "description": "P3R Companion Guide",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo \"No build required\"",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "express": "^4.19.2"
+  }
+}

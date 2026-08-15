@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jura:wght@500;700&display=swap" rel="stylesheet">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P3R Companion Guide</title>
+  
+  <link rel="icon" href="icon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            'fade-in-up': {
+              '0%': { opacity: '0', transform: 'translateY(15px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            'scale-in': {
+              '0%': { opacity: '0', transform: 'scale(0.95)' },
+              '100%': { opacity: '1', transform: 'scale(1)' },
+            }
+          },
+          animation: {
+            'fade-in-up': 'fade-in-up 0.3s ease-out forwards',
+            'scale-in': 'scale-in 0.25s ease-out forwards'
+          },
+          colors: {
+            theme: {
+              card: 'var(--theme-card)',
+              'card-dark': 'var(--theme-card-dark)',
+              hover: 'var(--theme-hover)',
+              border: 'var(--theme-border)',
+              text: 'var(--theme-text)',
+              muted: 'var(--theme-muted)',
+              accent: 'var(--theme-accent)',
+              'accent-bg': 'var(--theme-accent-bg)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+  
+  <script>
+    function toggleAccordion(id, el) {
+        const content = document.getElementById(id);
+        const icon = el.querySelector('.fa-chevron-down');
+        
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            // Reset animation
+            content.classList.remove('animate-fade-in-up');
+            void content.offsetWidth; // trigger reflow
+            content.classList.add('animate-fade-in-up');
+            if(icon) icon.classList.add('rotate-180');
+        } else {
+            content.classList.add('hidden');
+            content.classList.remove('animate-fade-in-up');
+            if(icon) icon.classList.remove('rotate-180');
+        }
+    }
+  </script>
+  <script src="js/social_links.js?v=1786735771"></script>
+  <script src="js/compendium_data.js?v=1786726986"></script>
+  <script src="js/answers.js?v=1786734139"></script>
+  <script src="js/arcana_dropdown.js"></script>
+
+  <style>
+    
+    :root, [data-theme="default"] {
+      --theme-bg-grad1: rgba(5, 11, 20, 0.85);
+      --theme-bg-grad2: rgba(10, 25, 47, 0.90);
+      --theme-bg-img: var(--current-bg-img, url('img/persona-3-reload2.jpg'));
+      --theme-card: rgba(16, 30, 54, 0.7);
+      --theme-card-dark: rgba(5, 11, 20, 0.8);
+      --theme-hover: rgba(15, 35, 70, 0.6);
+      --theme-border: rgba(0, 212, 255, 0.2);
+      --theme-text: #ffffff;
+      --theme-muted: #94a3b8;
+      --theme-accent: #38bdf8;
+      --theme-accent-bg: rgba(14, 116, 144, 0.5);
+      --theme-req-text: #f87171;
+      --theme-req-bg: rgba(127, 29, 29, 0.3);
+      --theme-req-border: rgba(239, 68, 68, 0.3);
+      --theme-success-text: #6ee7b7;
+      --theme-success-bg: rgba(6, 78, 59, 0.2);
+      --theme-success-border: rgba(16, 185, 129, 0.5);
+    }
+
+    [data-theme="dark"] {
+      --theme-bg-grad1: rgba(0, 0, 0, 0.92);
+      --theme-bg-grad2: rgba(5, 5, 10, 0.95);
+      --theme-bg-img: var(--current-bg-img, url('img/persona-3-reload2.jpg'));
+      --theme-card: rgba(20, 20, 25, 0.7);
+      --theme-card-dark: rgba(10, 10, 15, 0.8);
+      --theme-hover: rgba(35, 35, 45, 0.6);
+      --theme-border: rgba(167, 139, 250, 0.2);
+      --theme-text: #f8fafc;
+      --theme-muted: #94a3b8;
+      --theme-accent: #a78bfa;
+      --theme-accent-bg: rgba(167, 139, 250, 0.15);
+      --theme-req-text: #f87171;
+      --theme-req-bg: rgba(127, 29, 29, 0.3);
+      --theme-req-border: rgba(239, 68, 68, 0.3);
+      --theme-success-text: #6ee7b7;
+      --theme-success-bg: rgba(6, 78, 59, 0.2);
+      --theme-success-border: rgba(16, 185, 129, 0.5);
+    }
+
+    [data-theme="light"] {
+      --theme-bg-grad1: rgba(255, 255, 255, 0.88);
+      --theme-bg-grad2: rgba(240, 245, 250, 0.92);
+      --theme-bg-img: var(--current-bg-img, url('img/persona-3-reload2.jpg'));
+      --theme-card: rgba(255, 255, 255, 0.75);
+      --theme-card-dark: rgba(240, 245, 250, 0.85);
+      --theme-hover: rgba(220, 230, 245, 0.6);
+      --theme-border: rgba(37, 99, 235, 0.2);
+      --theme-text: #0f172a;
+      --theme-muted: #475569;
+      --theme-accent: #2563eb;
+      --theme-accent-bg: rgba(37, 99, 235, 0.1);
+      --theme-req-text: #b91c1c;
+      --theme-req-bg: rgba(254, 226, 226, 0.8);
+      --theme-req-border: rgba(248, 113, 113, 0.6);
+      --theme-success-text: #047857;
+      --theme-success-bg: rgba(209, 250, 229, 0.8);
+      --theme-success-border: rgba(52, 211, 153, 0.6);
+    }
+
+    body {
+      background-image: linear-gradient(var(--theme-bg-grad1), var(--theme-bg-grad2)), var(--theme-bg-img);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--theme-text);
+      font-family: 'Jura', sans-serif;
+    }
+
+    .p3r-card {
+      background: var(--theme-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--theme-border);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    [data-theme="light"] .p3r-card {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+.p3r-blue-glow {
+      text-shadow: 0 0 12px rgba(0, 183, 255, 0.6);
+    }
+  
+    .req-box {
+      color: var(--theme-req-text) !important;
+      background-color: var(--theme-req-bg) !important;
+      border-color: var(--theme-req-border) !important;
+    }
+    .success-box {
+      color: var(--theme-success-text) !important;
+      background-color: var(--theme-success-bg) !important;
+      border-color: var(--theme-success-border) !important;
+    }
+</style>
+</head>
+<body class="min-h-screen pb-10 flex flex-col items-center">
+  
+
+
+  <div class="w-full max-w-md px-4 pt-8">
+    
+    <header class="mb-6 flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-black tracking-wider text-theme-accent p3r-blue-glow">P3R GUIDE</h1>
+        <p class="text-xs text-theme-accent opacity-80">S.E.E.S. Tactical Companion</p>
+      </div>
+      <button id="back-btn" onclick="showScreen('home')" class="hidden bg-theme-card-dark text-theme-accent p-2 rounded-full border border-theme-border">
+        <i class="fas fa-arrow-left text-lg"></i>
+      </button>
+    </header>
+
+    <!-- MENÚ PRINCIPAL -->
+    <main id="screen-home" class="space-y-4 animate-fade-in-up">
+      <div class="p3r-card rounded-2xl p-2 space-y-2">
+        <button onclick="showScreen('slinks'); renderSLinksList();" class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-theme-hover active:scale-[0.98] transition-all text-left">
+          <div class="flex items-center space-x-4">
+            <div class="bg-theme-card-dark text-theme-accent p-3 rounded-lg border border-theme-border">
+              <i class="fas fa-users text-xl"></i>
+            </div>
+            <div>
+              <h2 class="font-bold text-lg text-theme-text">Social Links</h2>
+              <p class="text-xs text-theme-muted">Guides, skills and gifts</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-right text-theme-muted"></i>
+        </button>
+        
+        <button onclick="showScreen('compendium'); renderCompendium();" class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-theme-hover active:scale-[0.98] transition-all text-left">
+          <div class="flex items-center space-x-4">
+            <div class="bg-theme-card-dark text-theme-accent p-3 rounded-lg border border-theme-border">
+              <i class="fas fa-book-open text-xl"></i>
+            </div>
+            <div>
+              <h2 class="font-bold text-lg text-theme-text">Compendium</h2>
+              <p class="text-xs text-theme-muted">Personas and Shadows</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-right text-theme-muted"></i>
+        </button>
+
+        <button onclick="showScreen('answers'); renderAnswers();" class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-theme-hover active:scale-[0.98] transition-all text-left">
+          <div class="flex items-center space-x-4">
+            <div class="bg-theme-card-dark text-theme-accent p-3 rounded-lg border border-theme-border">
+              <i class="fas fa-graduation-cap text-xl"></i>
+            </div>
+            <div>
+              <h2 class="font-bold text-lg text-theme-text">Class Answers</h2>
+              <p class="text-xs text-theme-muted">Exams and daily questions</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-right text-theme-muted"></i>
+        </button>
+      </div>
+
+      <div class="p3r-card rounded-2xl p-2">
+        <button onclick="document.getElementById('theme-modal').classList.remove('hidden')" class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-theme-hover active:scale-[0.98] transition-all text-left">
+          <div class="flex items-center space-x-4">
+            <div class="bg-theme-card-dark text-theme-accent p-3 rounded-lg border border-theme-border">
+              <i class="fas fa-palette text-xl"></i>
+            </div>
+            <div>
+              <h2 class="font-bold text-lg text-theme-text">Appearance</h2>
+              <p class="text-xs text-theme-muted">Change app theme</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-right text-theme-muted"></i>
+        </button>
+      </div>
+    </main>
+
+    <!-- SOCIAL LINKS -->
+    <main id="screen-slinks" class="hidden space-y-4 animate-fade-in-up">
+      <div class="relative mb-4">
+        <i class="fas fa-search absolute left-4 top-3.5 text-theme-muted"></i>
+        <input type="text" id="search-slink" onkeyup="filterSLinks()" placeholder="Search arcana or character..." 
+               class="w-full bg-theme-card border border-theme-border rounded-xl pl-11 pr-10 py-3 text-base text-theme-text placeholder-slate-500 focus:outline-none focus:border-theme-accent">
+        <button onclick="document.getElementById('search-slink').value=''; filterSLinks();" class="absolute right-4 top-1/2 -translate-y-1/2 text-theme-muted hover:text-theme-text transition-colors z-10"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="slinks-grid" class="grid grid-cols-2 gap-3"></div>
+    </main>
+
+    <main id="screen-slink-detail" class="hidden space-y-4 animate-fade-in-up">
+      <div id="slink-header" class="p3r-card p-4 rounded-xl text-center border-t-4 border-theme-accent"></div>
+      <div id="slink-tabs-container"></div>
+      <div id="slink-content-answers" class="space-y-2 animate-fade-in-up"></div>
+      <div id="slink-content-unlocks" class="hidden space-y-2 animate-fade-in-up"></div>
+      <div id="slink-content-phone" class="hidden space-y-2 animate-fade-in-up"></div>
+      <div id="slink-content-gifts" class="hidden space-y-2 animate-fade-in-up"></div>
+    </main>
+
+    <!-- COMPENDIO -->
+    <main id="screen-compendium" class="hidden space-y-4 animate-fade-in-up">
+      <div class="space-y-2">
+        <div class="relative w-full">
+          <i class="fas fa-search absolute left-4 top-3.5 text-theme-muted"></i>
+          <input type="text" id="search-persona" onkeyup="filterAndSortCompendium()" placeholder="Search Persona..." 
+                 class="w-full bg-theme-card border border-theme-border rounded-xl pl-11 pr-10 py-3 text-base text-theme-text placeholder-slate-500 focus:outline-none focus:border-theme-accent">
+          <button onclick="document.getElementById('search-persona').value=''; filterAndSortCompendium();" class="absolute right-4 top-1/2 -translate-y-1/2 text-theme-muted hover:text-theme-text transition-colors z-10"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="flex gap-2">
+          <div class="relative flex-1" id="custom-arcana-dropdown-container">
+            <input type="hidden" id="filter-arcana" value="all">
+            <button id="custom-arcana-btn" onclick="toggleArcanaDropdown(event)" class="w-full flex items-center justify-between bg-theme-card border border-theme-border rounded-xl px-3 py-3 text-sm text-theme-text focus:outline-none focus:border-theme-accent hover:bg-theme-hover transition-colors">
+              <span id="custom-arcana-btn-text">All Arcana</span>
+              <i class="fas fa-chevron-down text-theme-muted transition-transform" id="custom-arcana-chevron"></i>
+            </button>
+            <div id="custom-arcana-menu" class="hidden absolute top-[calc(100%+8px)] left-0 mt-2 w-[340px] max-w-[85vw] bg-[var(--theme-bg-grad1)] backdrop-blur-2xl border border-theme-border rounded-xl z-[60] p-3 max-h-[60vh] overflow-y-auto shadow-2xl animate-scale-in origin-top-left">
+              <div class="grid grid-cols-4 gap-3" id="arcana-grid">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+          <select id="sort-compendium" onchange="filterAndSortCompendium()" class="flex-1 bg-theme-card border border-theme-border rounded-xl px-3 py-3 text-sm text-theme-text focus:outline-none focus:border-theme-accent">
+            <option value="lvl-asc">Level: Low to High</option>
+            <option value="lvl-desc">Level: High to Low</option>
+            <option value="name-asc">Name: A - Z</option>
+          </select>
+        </div>
+      </div>
+      <div id="compendium-list" class="space-y-2"></div>
+    </main>
+
+    <!-- DETALLES DE PERSONA -->
+    <main id="screen-persona-detail" class="hidden space-y-4 animate-fade-in-up">
+      <div id="persona-header" class="p3r-card p-4 rounded-xl text-center border-t-4 border-theme-accent"></div>
+      <div id="persona-shadow" class="p3r-card p-3 rounded-xl border-l-4 border-purple-500 hidden"></div>
+      <div id="persona-stats" class="p3r-card p-4 rounded-xl"></div>
+      <div id="persona-affinities" class="p3r-card p-4 rounded-xl"></div>
+      <div id="persona-skills" class="p3r-card p-4 rounded-xl"></div>
+      <div id="persona-fusions" class="p3r-card p-4 rounded-xl"></div>
+    </main>
+
+    <!-- RESPUESTAS DE CLASE -->
+    <main id="screen-answers" class="hidden space-y-4 animate-fade-in-up">
+      <div class="relative">
+        <i class="fas fa-search absolute left-4 top-3.5 text-theme-muted"></i>
+        <input type="text" id="search-answers" onkeyup="renderAnswers()" placeholder="Search by month, date or question..." 
+               class="w-full bg-theme-card border border-theme-border rounded-xl pl-11 pr-10 py-3 text-base text-theme-text placeholder-slate-500 focus:outline-none focus:border-theme-accent">
+        <button onclick="document.getElementById('search-answers').value=''; renderAnswers();" class="absolute right-4 top-1/2 -translate-y-1/2 text-theme-muted hover:text-theme-text transition-colors z-10"><i class="fas fa-times"></i></button>
+      </div>
+      
+      <!-- Aquí se inyectarán las respuestas vía JS -->
+      <div id="answers-list" class="space-y-6"></div>
+    </main>
+  </div>
+
+  <script>
+
+    let currentScreenState = { screen: 'home' };
+    
+    // Initialize history on load
+    window.addEventListener('DOMContentLoaded', () => {
+        if (!history.state) {
+            history.replaceState({ screen: 'home' }, '', '#home');
+        } else {
+            currentScreenState = history.state;
+            restoreScreen(history.state);
+        }
+    });
+
+    window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.screen) {
+            currentScreenState = event.state;
+            restoreScreen(event.state);
+        } else {
+            currentScreenState = { screen: 'home' };
+            showScreen('home', false);
+        }
+    });
+
+    function restoreScreen(state) {
+        if (state.screen === 'slink-detail') {
+            openSLinkDetail(state.id, false);
+        } else if (state.screen === 'persona-detail') {
+            openPersonaDetail(state.id, false);
+        } else if (state.screen === 'slinks') {
+            showScreen('slinks', false);
+            if (typeof renderSLinksList === 'function') renderSLinksList();
+        } else if (state.screen === 'compendium') {
+            showScreen('compendium', false);
+            if (typeof renderCompendium === 'function') renderCompendium();
+        } else if (state.screen === 'answers') {
+            showScreen('answers', false);
+            if (typeof renderAnswers === 'function') renderAnswers();
+        } else {
+            showScreen('home', false);
+        }
+    }
+
+    function showScreen(screen, push = true) {
+      if (push && currentScreenState.screen !== screen) {
+         history.pushState({ screen: screen }, '', '#' + screen);
+         currentScreenState = { screen: screen };
+      }
+
+      
+      // Clear searches
+      if (document.getElementById('search-slink')) {
+          document.getElementById('search-slink').value = '';
+          if(typeof filterSLinks === 'function') filterSLinks();
+      }
+      if (document.getElementById('search-persona')) {
+          document.getElementById('search-persona').value = '';
+          // reset arcana too
+          if (document.getElementById('filter-arcana')) {
+              document.getElementById('filter-arcana').value = 'all';
+              if(document.getElementById('custom-arcana-btn-text')) document.getElementById('custom-arcana-btn-text').innerText = 'All Arcana';
+          }
+          if(typeof filterAndSortCompendium === 'function') filterAndSortCompendium();
+      }
+      if (document.getElementById('search-answers')) {
+          document.getElementById('search-answers').value = '';
+          if(typeof renderAnswers === 'function') renderAnswers();
+      }
+      ['screen-home', 'screen-answers', 'screen-slinks', 'screen-slink-detail', 'screen-compendium', 'screen-persona-detail'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.classList.add('hidden');
+      });
+      
+      const backBtn = document.getElementById('back-btn');
+      if (screen === 'home') {
+        document.getElementById('screen-home').classList.remove('hidden');
+        backBtn.classList.add('hidden');
+        document.documentElement.style.setProperty('--current-bg-img', "url('img/persona-3-reload2.jpg')");
+      } else {
+        document.getElementById('screen-' + screen).classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        
+        // Use history.back() for the in-app back button to keep states synchronized
+        
+        // Custom back button logic instead of pure history.back() for better UX
+        backBtn.onclick = (e) => {
+           e.preventDefault();
+           if (screen === 'persona-detail') {
+               showScreen('compendium');
+           } else if (screen === 'slink-detail') {
+               showScreen('slinks');
+           } else {
+               showScreen('home');
+           }
+        };
+        
+        if (screen === 'compendium' || screen === 'persona-detail') {
+          document.documentElement.style.setProperty('--current-bg-img', "url('img/persona3-reload4.jpg')");
+        } else if (screen === 'slinks' || screen === 'slink-detail') {
+          document.documentElement.style.setProperty('--current-bg-img', "url('img/persona-3-reload3.jpg')");
+        } else if (screen === 'answers') {
+          document.documentElement.style.setProperty('--current-bg-img', "url('img/persona-3-reload.jpg')");
+        } else {
+          document.documentElement.style.setProperty('--current-bg-img', "url('img/persona-3-reload2.jpg')");
+        }
+      }
+    }
+    function switchSLinkTab(tab) {
+      ['answers', 'unlocks', 'phone', 'gifts'].forEach(t => {
+        const el = document.getElementById('slink-content-' + t);
+        if(el) el.classList.add('hidden');
+        
+        const btn = document.getElementById('tab-' + t);
+        if(btn) {
+            btn.classList.remove('text-theme-accent', 'border-theme-accent');
+            btn.classList.add('text-theme-muted', 'border-transparent');
+        }
+      });
+      
+      const targetEl = document.getElementById('slink-content-' + tab);
+      if(targetEl) targetEl.classList.remove('hidden');
+      
+      const activeBtn = document.getElementById('tab-' + tab);
+      if(activeBtn) {
+          activeBtn.classList.remove('text-theme-muted', 'border-transparent');
+          activeBtn.classList.add('text-theme-accent', 'border-theme-accent');
+      }
+    }
+
+    function toggleFavorite(e, id) {
+      e.stopPropagation();
+      let favs = JSON.parse(localStorage.getItem('p3r-favs') || '[]');
+      if (favs.includes(id)) {
+        favs = favs.filter(f => f !== id);
+      } else {
+        favs.push(id);
+      }
+      localStorage.setItem('p3r-favs', JSON.stringify(favs));
+      renderSLinksList();
+    }
+
+    function renderSLinksList() {
+      const grid = document.getElementById('slinks-grid');
+      grid.innerHTML = ''; 
+      if (typeof socialLinks === 'undefined') return;
+      
+      let favs = JSON.parse(localStorage.getItem('p3r-favs')) || [];
+      let sortedLinks = [...socialLinks].sort((a, b) => {
+          let aFav = favs.includes(a.id) ? 1 : 0;
+          let bFav = favs.includes(b.id) ? 1 : 0;
+          return bFav - aFav; // Favorites first
+      });
+
+      sortedLinks.forEach(link => {
+        const card = document.createElement('div');
+        card.className = "relative slink-card p3r-card p-4 rounded-xl text-center flex flex-col items-center justify-center cursor-pointer hover:bg-theme-accent-bg transition";
+        card.onclick = () => openSLinkDetail(link.id);
+        
+        card.innerHTML = `
+          <button onclick="toggleFavorite(event, '${link.id}')" class="absolute top-2 right-2 text-lg focus:outline-none transition-transform hover:scale-125 z-10 ${favs.includes(link.id) ? 'text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]' : 'text-theme-muted hover:text-theme-muted'}">
+             <i class="fas fa-star"></i>
+          </button>
+          <img src="${link.image}" alt="${link.name}" class="w-16 h-16 object-cover rounded-full mb-2 border-2 ${link.borderColor}">
+          <h3 class="font-bold text-theme-text text-sm leading-tight">${link.name}</h3>
+          <p class="text-xs text-theme-muted mt-1">${link.arcana}</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openSLinkDetail(id, push = true) {
+      if (push) {
+          history.pushState({ screen: 'slink-detail', id: id }, '', '#slink-detail-' + id);
+          currentScreenState = { screen: 'slink-detail', id: id };
+      }
+      const link = socialLinks.find(s => s.id === id);
+      if (!link) return;
+      showScreen('slink-detail', false);
+      // Cabecera del Social Link
+      document.getElementById('slink-header').innerHTML = `
+        <img src="${link.image}" alt="${link.name}" class="w-24 h-24 object-cover rounded-full mx-auto mb-3 border-4 ${link.borderColor}">
+        <h2 class="text-2xl font-bold text-theme-text">${link.name}</h2>
+        <p class="text-sm text-theme-accent tracking-widest uppercase mt-1">${link.arcana}</p>
+        ${link.req ? `<p class="text-xs mt-3 p-2 rounded inline-block border req-box">${link.req}</p>` : ''}
+      `;
+
+      // Pestanas
+            document.getElementById('slink-tabs-container').innerHTML = `
+        <div class="flex border-b border-theme-border mb-4 mt-2 ">
+          <button id="tab-answers" onclick="switchSLinkTab('answers')" class="flex-1 px-3 py-2 text-xs md:text-sm font-bold text-theme-accent border-b-2 border-theme-accent transition">Ranks</button>
+          <button id="tab-phone" onclick="switchSLinkTab('phone')" class="flex-1 px-3 py-2 text-xs md:text-sm font-bold text-theme-muted border-b-2 border-transparent transition">Events</button>
+          <button id="tab-gifts" onclick="switchSLinkTab('gifts')" class="flex-1 px-3 py-2 text-xs md:text-sm font-bold text-theme-muted border-b-2 border-transparent transition">Gifts</button>
+          <button id="tab-unlocks" onclick="switchSLinkTab('unlocks')" class="flex-1 px-3 py-2 text-xs md:text-sm font-bold text-theme-muted border-b-2 border-transparent transition">Skills</button>
+        </div>
+      `;
+
+      // 1. Respuestas de Diálogo
+      const ranksContainer = document.getElementById('slink-content-answers');
+      ranksContainer.innerHTML = '';
+
+      if (link.availability) {
+        ranksContainer.innerHTML += `
+        <details class="mb-4 bg-theme-card border border-theme-border rounded-xl overflow-hidden group">
+          <summary class="cursor-pointer p-3 text-theme-accent font-bold hover:bg-theme-hover transition-colors select-none flex items-center justify-between">
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Availability & Location
+            </span>
+            <svg class="w-5 h-5 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linecap="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="p-4 border-t border-theme-border bg-theme-card-dark">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <p class="text-xs text-theme-accent uppercase tracking-wider mb-1">Location</p>
+                <p class="text-sm text-theme-text">${link.availability.location}</p>
+              </div>
+              <div>
+                <p class="text-xs text-theme-accent uppercase tracking-wider mb-1">Time of Day</p>
+                <p class="text-sm text-theme-text">${link.availability.time}</p>
+              </div>
+              <div>
+                <p class="text-xs text-theme-accent uppercase tracking-wider mb-1">Unlocks On</p>
+                <p class="text-sm text-theme-text">${link.availability.unlock}</p>
+              </div>
+            </div>
+            
+            <p class="text-xs text-theme-accent uppercase tracking-wider mb-2">Weekly Schedule</p>
+            <div class="flex gap-1 mb-4 text-center text-[10px] sm:text-xs">
+              ${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => `
+                <div class="flex-1 rounded p-1 ${link.availability.days[day] ? 'bg-theme-accent-bg text-theme-accent' : 'bg-theme-card-dark text-theme-muted'} border ${link.availability.days[day] ? 'border-theme-border' : 'border-theme-border'}">
+                  <div class="font-bold mb-1">${day}</div>
+                  <div class="text-sm font-black">${link.availability.days[day] ? '✓' : '✗'}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <p class="text-xs text-theme-accent uppercase tracking-wider mb-2">Monthly Availability</p>
+            <div class="flex gap-1 text-center text-[10px] sm:text-xs">
+              ${['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'].map(month => `
+                <div class="flex-1 rounded p-1 ${link.availability.months[month] ? 'bg-[var(--theme-accent-bg)] text-[var(--theme-accent)] font-bold' : 'bg-theme-card-dark text-theme-muted'} border ${link.availability.months[month] ? 'border-theme-border' : 'border-theme-border'}">
+                  <div class="font-bold mb-1">${month}</div>
+                  <div class="text-sm font-black">${link.availability.months[month] ? '✓' : '✗'}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </details>
+        `;
+      }
+
+      if (!link.ranks || link.ranks.length === 0) {
+        ranksContainer.innerHTML = `<p class="text-theme-muted text-center italic mt-4">Automatic S.Link or no dialogue choices.</p>`;
+      } else {
+        link.ranks.forEach((r, idx) => {          let promptsHTML = r.prompts.map(p => {            let optionsHTML = p.options.map(opt => {              let isBest = opt.best ? 'bg-theme-accent-bg border-theme-accent text-theme-text font-bold' : 'bg-theme-card border-theme-border text-theme-muted';              let checkIcon = opt.best ? '<i class="fas fa-check-circle text-theme-accent mr-2"></i>' : '<i class="far fa-circle text-theme-muted mr-2"></i>';              let pointsBadge = opt.points > 0 ? `<span class="ml-2 text-xs font-bold bg-theme-accent-bg text-theme-text px-2 py-0.5 rounded whitespace-nowrap">+${opt.points}</span>` : '';                            let textToDisplay = opt.text === '(Any response)' ? '-' : opt.text;              if (textToDisplay === '-') {                 isBest = 'bg-theme-card border-theme-border text-theme-muted opacity-70';                 checkIcon = '<i class="fas fa-minus text-theme-muted mr-2"></i>';              }                            return `<div class="p-2 mb-2 rounded-lg border ${isBest} text-sm flex items-center justify-between"><div class="flex items-start"><div class="mt-0.5">${checkIcon}</div><span>${textToDisplay}</span></div>${pointsBadge}</div>`;            }).join('');            
+            let qText = p.question
+                .replace(/\[Romance\]/g, '<span class="text-pink-400 font-bold">[Romance]</span>')
+                .replace(/\[Romance Route\]/g, '<span class="text-pink-400 font-bold">[Romance]</span>')
+                .replace(/\[Platonic\]/g, '<span class="text-purple-400 font-bold">[Platonic]</span>')
+                .replace(/\[ALT Platonic\]/g, '<span class="text-purple-400 font-bold">[ALT Platonic]</span>');
+            return `<div class="mb-5 last:mb-0"><p class="text-sm text-theme-muted font-semibold mb-3 flex items-start gap-2"><i class="fas fa-comment-dots mt-1 text-theme-accent"></i><span>${qText}</span></p>${optionsHTML}</div>`;
+          }).join('<div class="h-px bg-[var(--theme-border)] my-4"></div>');                    let reqHTML = r.req ? `<div class="mt-5 p-3 rounded-lg text-sm flex items-start gap-2 border success-box"><i class="fas fa-check-circle mt-0.5"></i><span>${r.req}</span></div>` : '';                    let contentId = `slink-rank-${idx}-${Math.random().toString(36).substr(2, 9)}`;          ranksContainer.innerHTML += `            <div class="p3r-card rounded-xl overflow-hidden mb-3 border-l-2 border-[var(--theme-accent)] transition-colors">              <div class="bg-theme-card p-3 flex justify-between items-center cursor-pointer select-none hover:bg-theme-hover" onclick="toggleAccordion('${contentId}', this)">                <span class="font-bold text-theme-accent">Rank ${r.rank}</span>                <i class="fas fa-chevron-down text-theme-muted text-sm transition-transform duration-300"></i>              </div>              <div id="${contentId}" class="p-3 bg-theme-card-dark hidden">                 ${promptsHTML}                 ${reqHTML}              </div>            </div>          `;        });      }      // 2. Habilidades / Recompensas (Soporta múltiples formatos de datos)
+      const unlocksContainer = document.getElementById('slink-content-unlocks');
+      unlocksContainer.innerHTML = '';
+      const rewardsList = link.rewards || link.unlocks || link.skills || [];
+      
+      if (rewardsList.length === 0) {
+         unlocksContainer.innerHTML = `<p class="text-theme-muted text-center italic mt-4">This character does not grant special skills or they are not registered.</p>`;
+      } else {
+         rewardsList.forEach(u => {
+           let title = u.name || u.rank || "Recompensa";
+           let desc = u.desc || u.effect || u.text || u;
+           unlocksContainer.innerHTML += `
+             <div class="p3r-card p-4 rounded-xl mb-3 border-l-4 border-purple-500">
+               <h4 class="text-theme-text font-bold mb-1">${title}</h4>
+               <p class="text-sm text-theme-muted">${desc}</p>
+             </div>
+           `;
+         });
+      }
+
+                        // 3. Events (Summer Fest + Phone)
+      const phoneContainer = document.getElementById('slink-content-phone');
+      phoneContainer.innerHTML = '';
+      
+      let eventsHTML = '';
+      
+      if (link.summerFestival) {
+          eventsHTML += `
+                <div class="p3r-card rounded-xl overflow-hidden mb-4 border-l-2 border-orange-500 transition-colors">
+                  <div class="bg-theme-card p-3 flex justify-between items-center cursor-pointer select-none hover:bg-theme-hover" onclick="toggleAccordion('summer-fest', this)">
+                    <span class="font-bold text-orange-300">🎆 Summer Festival (${link.summerFestival.date})</span>
+                    <i class="fas fa-chevron-down text-theme-muted text-sm transition-transform duration-300"></i>
+                  </div>
+                  <div id="summer-fest" class="p-3 bg-theme-card-dark hidden">
+                     <p class="text-sm text-theme-muted font-semibold mb-3 flex items-start gap-2">
+                        <i class="fas fa-fire mt-1 text-orange-500"></i><span>${link.summerFestival.prompt}</span>
+                     </p>
+                     <div class="p-2 mb-2 rounded-lg border bg-theme-accent-bg border-theme-accent text-theme-text font-bold text-sm flex items-center justify-between">
+                        <div class="flex items-start"><div class="mt-0.5"><i class="fas fa-check-circle text-theme-accent mr-2"></i></div><span>${link.summerFestival.response}</span></div>
+                        ${link.summerFestival.pts ? `<span class="ml-2 text-xs font-bold bg-orange-800 text-orange-100 px-2 py-0.5 rounded whitespace-nowrap">${link.summerFestival.pts}</span>` : ''}
+                     </div>
+                  </div>
+                </div>
+          `;
+      }
+
+      const phoneList = link.phoneInvites || [];
+      if (phoneList.length > 0) {
+          if (link.summerFestival) {
+              eventsHTML += '<h4 class="text-xs font-bold text-theme-accent uppercase tracking-wider mb-2 mt-4">Phone Invites</h4>';
+          }
+          phoneList.forEach((inv, idx) => {
+              let ptsHTML = inv.pts ? `<span class="ml-2 text-xs font-bold bg-theme-accent-bg text-theme-text px-2 py-0.5 rounded whitespace-nowrap">${inv.pts}</span>` : '';
+              let contentId = `slink-phone-${idx}-${Math.random().toString(36).substr(2, 9)}`;
+              eventsHTML += `
+                <div class="p3r-card rounded-xl overflow-hidden mb-3 border-l-2 border-purple-500 transition-colors">
+                  <div class="bg-theme-card p-3 flex justify-between items-center cursor-pointer select-none hover:bg-theme-hover" onclick="toggleAccordion('${contentId}', this)">
+                    <span class="font-bold text-purple-300">Rank ${inv.rank}</span>
+                    <i class="fas fa-chevron-down text-theme-muted text-sm transition-transform duration-300"></i>
+                  </div>
+                  <div id="${contentId}" class="p-3 bg-theme-card-dark hidden">
+                     <p class="text-sm text-theme-muted font-semibold mb-3 flex items-start gap-2">
+                        <i class="fas fa-phone-alt mt-1 text-purple-500"></i><span>${inv.prompt}</span>
+                     </p>
+                     <div class="p-2 mb-2 rounded-lg border bg-theme-accent-bg border-theme-accent text-theme-text font-bold text-sm flex items-center justify-between">
+                        <div class="flex items-start"><div class="mt-0.5"><i class="fas fa-check-circle text-theme-accent mr-2"></i></div><span>${inv.response}</span></div>${ptsHTML}
+                     </div>
+                  </div>
+                </div>
+              `;
+          });
+      }
+      
+      if (phoneList.length === 0 && !link.summerFestival) {
+          eventsHTML = `<p class="text-theme-muted text-center italic mt-4">This character has no registered phone or special events.</p>`;
+      }
+      
+      phoneContainer.innerHTML = eventsHTML;
+
+      // 4. Gifts
+      const giftsContainer = document.getElementById('slink-content-gifts');
+      giftsContainer.innerHTML = '';
+      const giftsList = link.gifts || link.favGifts || link.bestGifts || [];
+      
+      if (giftsList.length > 0) {
+         giftsList.forEach(g => {
+           let giftName = typeof g === 'string' ? g : (g.name || g.item);
+           let giftReaction = typeof g === 'object' && (g.reaction || g.pts) ? (g.reaction || g.pts) : "+50";
+           
+           if (!String(giftReaction).includes('+')) giftReaction = '+' + giftReaction;
+
+           giftsContainer.innerHTML += `
+             <div class="p3r-card p-3 rounded-xl mb-2 flex justify-between items-center border border-pink-500/30">
+               <span class="text-sm font-bold text-theme-text">${giftName}</span>
+               <span class="text-xs bg-pink-900/50 text-pink-300 py-1 px-2 rounded-lg border border-pink-500/30 font-bold">${giftReaction}</span>
+             </div>
+           `;
+         });
+      } else {
+          giftsContainer.innerHTML = `<p class="text-theme-muted text-center italic mt-4">This character does not receive gifts or they are not registered.</p>`;
+      }
+      
+      switchSLinkTab('answers'); 
+    }
+
+    function renderAnswers() {
+      const container = document.getElementById('answers-list');
+      const searchTerm = document.getElementById('search-answers').value.toLowerCase();
+      container.innerHTML = '';
+
+      if (typeof classAnswers === 'undefined') return;
+
+      classAnswers.forEach(monthGroup => {
+        // Filtramos los items dentro del mes que coincidan con la búsqueda
+        const filteredItems = monthGroup.items.filter(item => 
+          item.date.toLowerCase().includes(searchTerm) || 
+          item.question.toLowerCase().includes(searchTerm) || 
+          item.answer.toLowerCase().includes(searchTerm) ||
+          monthGroup.month.toLowerCase().includes(searchTerm)
+        );
+
+        // Si hay resultados para este mes, renderizamos el bloque del mes
+                if (filteredItems.length > 0) {
+          let isSearching = searchTerm.trim() !== '';
+          let html = `
+            <details class="month-group mb-4 border border-theme-border rounded-xl overflow-hidden group" ${isSearching ? 'open' : ''}>
+              <summary class="cursor-pointer p-3 bg-theme-hover hover:bg-theme-hover transition-colors select-none flex items-center justify-between border-b border-theme-border">
+                <h3 class="text-lg font-black text-theme-accent">${monthGroup.month}</h3>
+                <svg class="w-5 h-5 text-theme-accent transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </summary>
+              <div class="p-4 space-y-3 bg-theme-card-dark">
+          `;
+
+          filteredItems.forEach(item => {
+            html += `
+              <div class="p3r-card p-4 rounded-xl border-l-4 border-l-[var(--theme-accent)]">
+                <span class="text-xs font-bold text-theme-accent tracking-widest block mb-2">${item.date.replace('(Exam)', '<span class="text-yellow-400">(Exam)</span>')}</span>
+                <p class="text-sm text-theme-text mb-3 italic">${item.question}</p>
+                <p class="text-sm font-bold text-theme-text bg-theme-card-dark p-2 rounded border border-theme-border">✓ ${item.answer}</p>
+              </div>
+            `;
+          });
+
+          html += `</div></details>`;
+          container.innerHTML += html;
+        }
+      });
+
+      if (container.innerHTML === '') {
+        container.innerHTML = '<p class="text-theme-muted text-center italic mt-4">No se encontraron resultados.</p>';
+      }
+    }
+
+    function filterSLinks() {
+      let input = document.getElementById('search-slink').value.toLowerCase();
+      let cards = document.getElementsByClassName('slink-card');
+      for (let card of cards) {
+        let text = card.innerText.toLowerCase();
+        if (text.includes(input)) { card.style.display = "flex"; } 
+        else { card.style.display = "none"; }
+      }
+    }
+
+    function renderCompendium() {
+      filterAndSortCompendium();
+    }
+
+    function filterAndSortCompendium() {
+      const list = document.getElementById('compendium-list');
+      list.innerHTML = '';
+      if (typeof compendiumData === 'undefined') return;
+
+      let textInput = document.getElementById('search-persona').value.toLowerCase();
+      let arcanaFilter = document.getElementById('filter-arcana').value;
+      let sortOption = document.getElementById('sort-compendium').value;
+
+      let filtered = compendiumData.filter(persona => {
+        let matchesText = persona.name.toLowerCase().includes(textInput);
+        let matchesArcana = (arcanaFilter === 'all' || persona.arcana === arcanaFilter);
+        return matchesText && matchesArcana;
+      });
+
+      filtered.sort((a, b) => {
+        if (sortOption === 'lvl-asc') return a.lvl - b.lvl;
+        if (sortOption === 'lvl-desc') return b.lvl - a.lvl;
+        if (sortOption === 'name-asc') return a.name.localeCompare(b.name);
+      });
+
+      filtered.forEach(persona => {
+        const item = document.createElement('div');
+        item.className = "p3r-card p-3 rounded-xl flex items-center justify-between border-l-4 border-[var(--theme-accent)] cursor-pointer hover:bg-theme-hover active:scale-[0.98] transition-all";
+        item.onclick = () => openPersonaDetail(persona.name);
+        
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="bg-[var(--theme-accent-bg)] text-[var(--theme-accent)] font-black text-sm w-10 h-10 flex items-center justify-center rounded-lg border border-theme-border">
+              ${persona.lvl}
+            </div>
+            <div>
+              <h3 class="font-bold text-theme-text">${persona.name}</h3>
+              <p class="text-xs text-theme-muted">${persona.arcana}</p>
+            </div>
+          </div>
+          <div class="text-theme-muted text-xs text-right w-24">
+            ${persona.special ? '<i class="fas fa-star text-yellow-500"></i> Especial' : 'Estándar'}
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function openPersonaDetail(name, push = true) {
+      if (push) {
+          history.pushState({ screen: 'persona-detail', id: name }, '', '#persona-detail-' + encodeURIComponent(name));
+          currentScreenState = { screen: 'persona-detail', id: name };
+      }
+      const p = compendiumData.find(x => x.name === name);
+      if (!p) return;
+      showScreen('persona-detail', false);
+      document.getElementById('persona-header').innerHTML = `
+        <h2 class="text-2xl font-bold text-theme-text">${p.name}</h2>
+        <p class="text-sm text-theme-accent tracking-widest uppercase mt-1">${p.arcana} - Level ${p.lvl}</p>
+      `;
+
+      const shadowContainer = document.getElementById('persona-shadow');
+      if (p.shadowName) {
+        shadowContainer.innerHTML = `<span class="text-xs text-theme-muted uppercase tracking-wider block mb-1">Nombre de Sombra</span><span class="text-theme-text font-bold text-sm">${p.shadowName}</span>`;
+        shadowContainer.classList.remove('hidden');
+      } else {
+        shadowContainer.classList.add('hidden');
+      }
+
+      let statsHTML = '';
+      if (p.stats) {
+         statsHTML = `
+           <h3 class="text-theme-accent font-bold mb-3 border-b border-theme-border pb-1">Estadísticas</h3>
+           <div class="flex justify-between text-center">
+             <div><p class="text-xs text-theme-muted">FU</p><p class="text-theme-text font-bold">${p.stats.st}</p></div>
+             <div><p class="text-xs text-theme-muted">MA</p><p class="text-theme-text font-bold">${p.stats.ma}</p></div>
+             <div><p class="text-xs text-theme-muted">EN</p><p class="text-theme-text font-bold">${p.stats.en}</p></div>
+             <div><p class="text-xs text-theme-muted">AG</p><p class="text-theme-text font-bold">${p.stats.ag}</p></div>
+             <div><p class="text-xs text-theme-muted">SU</p><p class="text-theme-text font-bold">${p.stats.lu}</p></div>
+           </div>
+         `;
+      } else { statsHTML = '<p class="text-theme-muted italic text-sm">Estadísticas no disponibles aún.</p>'; }
+      document.getElementById('persona-stats').innerHTML = statsHTML;
+
+      let affHTML = '<h3 class="text-theme-accent font-bold mb-3 border-b border-theme-border pb-1">Affinities</h3>';
+      if (p.affinities) {
+        affHTML += `
+          <div class="grid grid-cols-5 gap-2 text-center text-sm">
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-slash-skill-icon-50x17.jpg" alt="Slash" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.slash || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-strike-skill-icon-50x17.jpg" alt="Strike" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.strike || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-pierce-skill-icon-50x17.jpg" alt="Pierce" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.pierce || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-fire-skill-icon-50x17.jpg" alt="Fire" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.fire || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-ice-skill-icon-50x17.jpg" alt="Ice" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.ice || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-elec-skill-icon-50x17.jpg" alt="Elec" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.elec || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-wind-skill-icon-50x17.jpg" alt="Wind" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.wind || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-light-skill-icon-50x17.jpg" alt="Light" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.light || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-dark-skill-icon-50x17.jpg" alt="Dark" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.dark || '-'}</span>
+             </div>
+             <div class="bg-[var(--theme-accent-bg)] py-1.5 px-0.5 rounded border border-theme-border flex flex-col items-center justify-between min-h-[56px] shadow-sm">
+                 <img src="img/types/sg-p3r-affinity-almighty-skill-icon-50x17.jpg" alt="Almighty" class="h-[14px] object-contain mb-1">
+                 <span class="text-[var(--theme-accent)] font-black text-sm drop-shadow-md">${p.affinities.almighty || '-'}</span>
+             </div>
+          </div>
+        `;
+      } else { affHTML += '<p class="text-theme-muted italic text-sm">Affinities not registered.</p>'; }
+      document.getElementById('persona-affinities').innerHTML = affHTML;
+
+      let skillsHTML = '<h3 class="text-theme-accent font-bold mb-3 border-b border-theme-border pb-1">Skills</h3>';
+      if (p.skills && p.skills.length > 0) {
+        skillsHTML += p.skills.map(s => `
+          <div class="mb-2 last:mb-0 bg-theme-card-dark/50 p-2 rounded border border-theme-border">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-theme-text text-sm">${s.name}</span>
+              <span class="text-xs bg-[var(--theme-accent-bg)] text-[var(--theme-accent)] border border-theme-border px-2 py-0.5 rounded">${s.cost}</span>
+            </div>
+            <p class="text-xs text-theme-muted">${s.desc}</p>
+          </div>
+        `).join('');
+      } else { skillsHTML += '<p class="text-theme-muted italic text-sm">No skills registered.</p>'; }
+      document.getElementById('persona-skills').innerHTML = skillsHTML;
+
+      let fusionHTML = '<h3 class="text-theme-accent font-bold mb-3 border-b border-theme-border pb-1">Fusions (Examples)</h3>';
+      if (p.fusions && p.fusions.length > 0) {
+        fusionHTML += '<ul class="list-disc pl-5 text-sm text-theme-muted space-y-1">';
+        fusionHTML += p.fusions.map(f => `<li>${f}</li>`).join('');
+        fusionHTML += '</ul>';
+      } else { fusionHTML += '<p class="text-theme-muted italic text-sm">Fusion recipes not registered.</p>'; }
+      document.getElementById('persona-fusions').innerHTML = fusionHTML;
+    }
+  </script>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 text-theme-text p-3 rounded-full hover:opacity-80 transition-opacity bg-[var(--theme-accent)] border border-theme-accent opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center justify-center w-12 h-12" style="box-shadow: 0 0 15px var(--theme-accent);">
+    <i class="fas fa-arrow-up text-xl"></i>
+  </button>
+  <script>
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backToTop');
+      if (window.scrollY > 300) {
+        btn.classList.remove('opacity-0', 'pointer-events-none');
+        btn.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+        btn.classList.add('opacity-0', 'pointer-events-none');
+        btn.classList.remove('opacity-100', 'pointer-events-auto');
+      }
+    });
+  </script>
+
+  <!-- THEME MODAL -->
+  <div id="theme-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="p3r-card w-full max-w-sm rounded-2xl p-5 border border-theme-border flex flex-col gap-4 relative animate-scale-in">
+      <button onclick="document.getElementById('theme-modal').classList.add('hidden')" class="absolute top-2 right-2 p-2 text-theme-muted hover:text-theme-text text-3xl transition-transform hover:scale-110 focus:outline-none z-10"><i class="fas fa-times"></i></button>
+      <h3 class="text-xl font-bold text-theme-accent mb-2">Appearance</h3>
+      
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="setTheme('default')" class="theme-btn border border-theme-border p-3 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-theme-hover transition" data-theme-id="default">
+          <i class="fas fa-clock text-3xl text-sky-400"></i>
+          <span class="text-sm font-bold text-theme-text">Blue (Default)</span>
+        </button>
+        
+        <button onclick="setTheme('dark')" class="theme-btn border border-theme-border p-3 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-theme-hover transition" data-theme-id="dark">
+          <i class="fas fa-moon text-3xl text-purple-400"></i>
+          <span class="text-sm font-bold text-theme-text">Dark</span>
+        </button>
+        
+        <button onclick="setTheme('light')" class="theme-btn border border-theme-border p-3 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-theme-hover transition" data-theme-id="light">
+          <i class="fas fa-sun text-3xl text-yellow-500"></i>
+          <span class="text-sm font-bold text-theme-text">Light</span>
+        </button>
+        
+        <button onclick="setTheme('system')" class="theme-btn border border-theme-border p-3 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-theme-hover transition" data-theme-id="system">
+          <i class="fas fa-cog text-3xl text-theme-muted"></i>
+          <span class="text-sm font-bold text-theme-text">System</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function updateActiveThemeBtn(theme) {
+       document.querySelectorAll('.theme-btn').forEach(btn => {
+           if(btn.dataset.themeId === theme) {
+               btn.classList.add('ring-2', 'ring-theme-accent', 'bg-theme-hover');
+           } else {
+               btn.classList.remove('ring-2', 'ring-theme-accent', 'bg-theme-hover');
+           }
+       });
+    }
+
+    function setTheme(theme) {
+       localStorage.setItem('p3r-theme', theme);
+       applyTheme(theme);
+       updateActiveThemeBtn(theme);
+    }
+
+    function applyTheme(theme) {
+       let activeTheme = theme;
+       if (theme === 'system') {
+           activeTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+       }
+       document.documentElement.setAttribute('data-theme', activeTheme);
+    }
+
+    // Init theme
+    const savedTheme = localStorage.getItem('p3r-theme') || 'default';
+    applyTheme(savedTheme);
+    
+    // Listen for system changes if system theme is selected
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if(localStorage.getItem('p3r-theme') === 'system') {
+            applyTheme('system');
+        }
+    });
+    
+    window.addEventListener('DOMContentLoaded', () => {
+        updateActiveThemeBtn(savedTheme);
+    });
+  </script>
+
+</body>
+</html>
+<style>
+details[open] summary ~ * {
+  animation: fade-in-up 0.3s ease-out forwards;
+}
+</style>
