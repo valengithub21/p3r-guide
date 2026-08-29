@@ -492,7 +492,7 @@ const socialLinks = [
     "name": "Fuuka Yamagishi",
     "image": "img/fuuka_priestess.png",
     "borderColor": "border-sky-300",
-    "req": "Requires: Courage Level 6 (Badass)",
+    "req": "Requires: Courage Level 6 (Badass) and Fortune Rank 1",
     "ranks": [
       {
         "rank": 2,
@@ -1656,11 +1656,11 @@ const socialLinks = [
       "time": "Daytime",
       "unlock": "November 21st",
       "days": {
-        "Mon": false,
+        "Mon": true,
         "Tue": true,
-        "Wed": false,
+        "Wed": true,
         "Thu": true,
-        "Fri": false,
+        "Fri": true,
         "Sat": true,
         "Sun": false
       },
@@ -1930,7 +1930,7 @@ const socialLinks = [
         "Wed": true,
         "Thu": false,
         "Fri": true,
-        "Sat": false,
+        "Sat": true,
         "Sun": false
       },
       "months": {
@@ -2867,7 +2867,7 @@ const socialLinks = [
     "availability": {
       "location": "Classroom 2-F",
       "time": "Daytime",
-      "unlock": "July 24th",
+      "unlock": "July 25th",
       "days": {
         "Mon": true,
         "Tue": false,
@@ -6216,7 +6216,7 @@ const socialLinks = [
     "name": "Monje Mutatsu",
     "image": "img/mutatsu_tower.png",
     "borderColor": "border-indigo-600",
-    "req": "Requires: Courage Level 4 (Tough) and buy him a drink at Club Escapade",
+    "req": "Requires: Courage Level 4 (Tough), Strength Rank 4, talk to Yuko, and buy him a drink at Club Escapade",
     "ranks": [
       {
         "rank": 2,
@@ -7248,7 +7248,7 @@ const socialLinks = [
     "name": "Akinari Kamiki",
     "image": "img/akinari_sun.png",
     "borderColor": "border-orange-300",
-    "req": "Requires: Academics Level 4 (Smart) and Hanged Man Rank 3",
+    "req": "Requires: Academics Level 4 (Smart), Hanged Man Rank 3, and the Red Fountain Pen from Koromaru",
     "ranks": [
       {
         "rank": 2,
